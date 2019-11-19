@@ -19,7 +19,9 @@ server.get('/inventory', (req, res) => {
 server.post('/inventory', (req, res) => {
   const car = req.body;
   
-  if (make || model)
+  if (!make || !model || !VIN || !mileage) {
+    res.status(404).json({ error: "please specify required fields" });
+  }
 
   db('cars')
     .then(inventory => {
